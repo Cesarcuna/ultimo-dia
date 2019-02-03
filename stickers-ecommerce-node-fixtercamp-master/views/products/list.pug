@@ -1,0 +1,14 @@
+extends ../layout.pug
+
+block content
+  h1.title Stickers
+  section.list
+    each p in products
+      -var productId = p._id
+      a(href="/products/detail/" + productId)
+        .card
+          img(width="100" src=p.productImageURL)
+          strong=p.name
+          form(action="/cart/add/", method="post")
+            input(type="hidden", name="productId", value=productId)
+            input(type="submit", value="Agregar al carrito")

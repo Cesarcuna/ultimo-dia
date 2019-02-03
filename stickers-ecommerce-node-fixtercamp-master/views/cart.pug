@@ -1,0 +1,41 @@
+extends ./layout.pug
+
+block content
+  h1.title Shopping Cart
+  div.table
+    span | Imagen | 
+    span | Name | 
+    span | Price | 
+    span | Quantity | 
+    span | Subtotal |
+
+  article.items
+    each p in products
+      -var productId = p.product._id
+      div.table.effect
+        img( height="100" width=100 src=p.product.productImageURL)
+        span #{p.product.name} 
+        span $#{p.product.price} 
+        form(action="/cart/add")
+          input.input-number(name="quantity" value=p.quantity min="1" max="10" type="number")
+          input(type="hidden" name="productId" value=productId)
+          input(type="submit" value="actualizar")
+        span #{p.product.price * p.quantity}
+        form(action="/cart/remove", method="post")
+          input(type="hidden", name="productId", value=productId)
+          button.fas.fa-trash-alt.bote(type="submit")
+          
+  a(href="/checkout")
+    button.call-to-action.esquina Pagar
+    h2.esquina $  #{total}.00MXN
+
+
+//- span
+//-           form(action="/cart/remove", method="post")
+//-             input(type="hidden", name="productId", value=productId)
+//-             input(type="submit", value=" - ") 
+//-         span #{p.quantity} 
+//-         span
+//-           form(action="/cart/add", method="post")
+//-             input(type="hidden", name="productId", value=productId)
+//-             input(type="submit", value=" + ")
